@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treino Masculino</title>
+    <style>
+        :root {
+            --beige-900: #f5f5dc; /* Bege claro como base */
+            --beige-800: #e6e6c4; /* Tom um pouco mais escuro */
+            --beige-700: #d7d7ac; /* Tom médio para contraste */
+            --black: #000000;     /* Preto principal */
+            --black-light: #333333; /* Preto suavizado */
+            --white: #ffffff;
+            --gray-300: #b0b0b0;
+            --gray-200: #d1d5db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+            user-select: none; /* Impede a seleção de texto em todos os elementos */
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, var(--beige-900), var(--beige-800));
+            color: var(--black);
+            overflow-x: hidden;
+            user-select: none; /* Reforça a desativação da seleção */
+        }
+
+        header {
+            background: var(--beige-700);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--black);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .reset-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            color: var(--gray-300);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .reset-button:hover {
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        main {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .workout-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .workout-tab {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 9999px;
+            background: var(--beige-800);
+            color: var(--black-light);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: transform 0.2s, background 0.3s, color 0.3s;
+        }
+
+        .workout-tab:hover {
+            transform: scale(1.05);
+        }
+
+        .workout-tab.active {
+            background: var(--black);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 0.5rem;
+            background: var(--beige-700);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--black);
+            transition: width 0.5s ease;
+        }
+
+        .progress-percent {
+            font-size: 0.875rem;
+            color: var(--black-light);
+        }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .exercise-card {
+            background: var(--beige-800);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .exercise-card.initial {
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .exercise-card.active {
+            transform: scale(1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .exercise-card:not(.active) {
+            background: var(--beige-900);
+            transform: scale(0.98);
+        }
+
+        .exercise-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .sets-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .set-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .set-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--black-light);
+            width: 4rem;
+        }
+
+        .weight-input {
+            width: 5rem;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 0.25rem;
+            background: var(--beige-700);
+            color: var(--black);
+            transition: border-color 0.2s;
+        }
+
+        .weight-input:focus {
+            border-color: var(--black);
+            outline: none;
+        }
+
+        .reps-info, .rest-info {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--black-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            background: var(--beige-700);
+        }
+
+        .reps-info {
+            color: var(--black);
+        }
+
+        .rest-info {
+            color: var(--black);
+        }
+
+        .complete-button {
+            width: 2rem;
+            height: 2rem;
+            border: 1px solid var(--black-light);
+            border-radius: 4px; /* Cantos levemente arredondados */
+            background: var(--beige-700);
+            color: var(--black-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .complete-button:hover {
+            background: var(--gray-200);
+        }
+
+        .complete-button.completed {
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+
+        .timer {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--black);
+            font-size: 0.875rem;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pause-button {
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--black);
+            border-radius: 9999px;
+            background: none;
+            color: var(--black);
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .pause-button:hover {
+            background: var(--beige-700);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            .set-row {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6.7 6.7a8 8 0 1 1 10.6 10.6"/>
+                    <path d="M8.9 8.9a5 5 0 1 1 6.2 6.2"/>
+                    <path d="M11.1 11.1a2 2 0 1 1 1.8 1.8"/>
+                </svg>
+                Treino Masculino
+            </div>
+            <button class="reset-button" onclick="resetWorkout()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+                Resetar
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="workout-tabs" id="workoutTabs"></div>
+        
+        <div class="progress-bar">
+            <div class="progress-header">
+                <h2 class="progress-title">Progresso</h2>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-percent" id="progressPercent">0%</span>
+            </div>
+        </div>
+
+        <div class="exercise-list" id="exerciseList"></div>
+    </main>
+
+    <script>
+        const workouts = [
+            {
+                day: 'Segunda-feira',
+                name: 'Peito e Tríceps',
+                exercises: [
+                    { name: 'Flexões', sets: 1, reps: 'Até a falha', rest: 35 },
+                    { name: 'Supino reto com barra', sets: 3, reps: 8, rest: 60, weight: 13 },
+                    { name: 'Supino inclinado com halteres', sets: 3, reps: 8, rest: 60, weight: 12 },
+                    { name: 'Crucifixo na máquina', sets: 3, reps: 8, rest: 60, weight: 30 },
+                    { name: 'Tríceps Carter', sets: 3, reps: 12, rest: 45, weight: 10 },
+                    { name: 'Tríceps Francês com Barra', sets: 3, reps: 8, rest: 60, weight: 20 }
+                ]
+            },
+            {
+                day: 'Terça-feira',
+                name: 'Ombro e Costas',
+                exercises: [
+                    { name: 'Puxada alta', sets: 3, reps: 8, rest: 60, weight: 40 },
+                    { name: 'Remada baixa', sets: 3, reps: 8, rest: 60, weight: 35 },
+                    { name: 'Remada unilateral', sets: 3, reps: 8, rest: 60, weight: 30 },
+                    { name: 'Remada alta no cabinho', sets: 3, reps: 8, rest: 60, weight: 35 },
+                    { name: 'Elevação lateral na polia', sets: 3, reps: 8, rest: 60, weight: 5 },
+                    { name: 'Elevação frontal na polia', sets: 3, reps: 8, rest: 60, weight: 15 }
+                ]
+            },
+            {
+                day: 'Quarta-feira',
+                name: 'Perna',
+                exercises: [
+                    { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30 },
+                    { name: 'Panturrilha', sets: 4, reps: 30, rest: 35 },
+                    { name: 'Agachamento Livre Smith', sets: 3, reps: 8, rest: 60 },
+                    { name: 'Legpress', sets: 3, reps: 8, rest: 60 },
+                    { name: 'Hack', sets: 4, reps: 12, rest: 60 },
+                    { name: 'Cadeira extensora', sets: 3, reps: 8, rest: 60 },
+                    { name: 'Mesa flexora', sets: 3, reps: 8, rest: 60 },
+                    { name: 'Flexão cadeira extensora', sets: 1, reps: 'Até a falha', rest: 60 }
+                ]
+            },
+            {
+                day: 'Quinta-feira',
+                name: 'Braço e Trapézio',
+                exercises: [
+                    { name: 'Rosca Scott barra W', sets: 3, reps: 8, rest: 90, weight: 16 },
+                    { name: 'Bíceps na polia', sets: 3, reps: 8, rest: 60, weight: 25 },
+                    { name: 'Rosca direta com halteres no banco', sets: 3, reps: 8, rest: 60, weight: 6 },
+                    { name: 'Crucifixo inverso', sets: 3, reps: 8, rest: 60, weight: 25 },
+                    { name: 'Encolhimento de ombros com halteres', sets: 3, reps: 12, rest: 60, weight: 15 }
+                ]
+            },
+            {
+                day: 'Sexta-feira',
+                name: 'Antebraço e Abdômen',
+                exercises: [
+                    { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30 },
+                    { name: 'Abdominal infra', sets: 4, reps: 50, rest: 30 },
+                    { name: 'Abdominal na barra', sets: 4, reps: 15, rest: 30 },
+                    { name: 'Antebraço sentado', sets: 3, reps: 12, rest: 30, weight: 10 },
+                    { name: 'Antebraço inverso sentado', sets: 3, reps: 8, rest: 30, weight: 4 },
+                    { name: 'Antebraço Martelo inverso', sets: 3, reps: 8, rest: 30, weight: 8 },
+                    { name: 'Antebraço na polia com pegador', sets: 2, reps: 10, rest: 30, weight: 15 }
+                ]
+            }
+        ];
+
+        let currentWorkout = 0;
+        let currentExercise = 0;
+        let workoutData = JSON.parse(localStorage.getItem('workoutData') || '{}');
+        let timerInterval = null;
+        let isTimerPaused = false;
+        let timeLeft = 0;
+        let activeTimerExercise = null;
+        let isInitialRender = true;
+
+        function initializeWorkoutData() {
+            workouts.forEach((workout, workoutIndex) => {
+                if (!workoutData[workoutIndex]) {
+                    workoutData[workoutIndex] = {};
+                }
+                workout.exercises.forEach((exercise, exerciseIndex) => {
+                    if (!workoutData[workoutIndex][exerciseIndex] || 
+                        workoutData[workoutIndex][exerciseIndex].weights.length !== exercise.sets) {
+                        workoutData[workoutIndex][exerciseIndex] = {
+                            weights: Array(exercise.sets).fill(exercise.weight || ''),
+                            completed: Array(exercise.sets).fill(false),
+                            timer: false
+                        };
+                    }
+                });
+            });
+            saveWorkoutData();
+        }
+
+        function saveWorkoutData() {
+            localStorage.setItem('workoutData', JSON.stringify(workoutData));
+        }
+
+        function createWorkoutTabs() {
+            const tabsContainer = document.getElementById('workoutTabs');
+            tabsContainer.innerHTML = '';
+            workouts.forEach((workout, index) => {
+                const button = document.createElement('button');
+                button.className = `workout-tab ${index === currentWorkout ? 'active' : ''}`;
+                button.textContent = `${workout.day} - ${workout.name}`;
+                button.onclick = () => selectWorkout(index);
+                tabsContainer.appendChild(button);
+            });
+        }
+
+        function selectWorkout(index) {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                activeTimerExercise = null;
+            }
+            currentWorkout = index;
+            currentExercise = 0;
+            updateUI();
+        }
+
+        function calculateProgress() {
+            const workout = workouts[currentWorkout];
+            const workoutState = workoutData[currentWorkout] || {};
+            let completed = 0;
+            let total = 0;
+
+            workout.exercises.forEach((exercise, exerciseIndex) => {
+                total += exercise.sets;
+                completed += (workoutState[exerciseIndex]?.completed || []).filter(Boolean).length;
+            });
+
+            return Math.round((completed / total) * 100) || 0;
+        }
+
+        function updateProgress() {
+            const progress = calculateProgress();
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressPercent').textContent = `${progress}%`;
+        }
+
+        function createExerciseCards() {
+            const container = document.getElementById('exerciseList');
+            container.innerHTML = ''; // Limpa completamente antes de recriar
+            const workout = workouts[currentWorkout];
+            workout.exercises.forEach((exercise, exerciseIndex) => {
+                const card = document.createElement('div');
+                card.className = `exercise-card ${exerciseIndex === currentExercise ? 'active' : ''} ${isInitialRender ? 'initial' : ''}`;
+                if (isInitialRender) {
+                    card.style.animationDelay = `${exerciseIndex * 0.1}s`;
+                }
+                card.dataset.exerciseIndex = exerciseIndex;
+
+                const name = document.createElement('h3');
+                name.className = 'exercise-name';
+                name.textContent = exercise.name;
+                card.appendChild(name);
+
+                const setsContainer = document.createElement('div');
+                setsContainer.className = 'sets-container';
+                card.appendChild(setsContainer);
+
+                // Adiciona o temporizador diretamente no DOM se ativo
+                if (exerciseIndex === activeTimerExercise && workoutData[currentWorkout][exerciseIndex]?.timer) {
+                    const timerElement = createTimer();
+                    card.appendChild(timerElement);
+                }
+
+                container.appendChild(card);
+                updateExerciseCard(exerciseIndex);
+            });
+            isInitialRender = false;
+        }
+
+        function updateExerciseCard(exerciseIndex) {
+            const workout = workouts[currentWorkout];
+            const exercise = workout.exercises[exerciseIndex];
+            const card = document.querySelector(`.exercise-card[data-exercise-index="${exerciseIndex}"]`);
+            if (!card) return;
+
+            card.className = `exercise-card ${exerciseIndex === currentExercise ? 'active' : ''}`;
+
+            const setsContainer = card.querySelector('.sets-container');
+            setsContainer.innerHTML = ''; // Limpa antes de recriar as séries
+
+            for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
+                const setRow = createSetRow(exerciseIndex, setIndex, exercise.reps, exercise.rest);
+                setsContainer.appendChild(setRow);
+            }
+        }
+
+        function createSetRow(exerciseIndex, setIndex, reps, rest) {
+            const row = document.createElement('div');
+            row.className = 'set-row';
+
+            const label = document.createElement('span');
+            label.className = 'set-label';
+            label.textContent = `Série ${setIndex + 1}`;
+            row.appendChild(label);
+
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'weight-input';
+            input.placeholder = 'Peso';
+            input.value = workoutData[currentWorkout][exerciseIndex]?.weights[setIndex] || '';
+            input.onchange = (e) => updateWeight(exerciseIndex, setIndex, e.target.value);
+            row.appendChild(input);
+
+            const repsInfo = document.createElement('span');
+            repsInfo.className = 'reps-info';
+            repsInfo.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 12h16"/>
+                    <path d="M4 6h16"/>
+                    <path d="M4 18h16"/>
+                </svg>
+                ${reps} reps
+            `;
+            row.appendChild(repsInfo);
+
+            const restInfo = document.createElement('span');
+            restInfo.className = 'rest-info';
+            restInfo.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ${rest}s
+            `;
+            row.appendChild(restInfo);
+
+            const button = document.createElement('button');
+            button.className = `complete-button ${workoutData[currentWorkout][exerciseIndex]?.completed[setIndex] ? 'completed' : ''}`;
+            button.innerHTML = workoutData[currentWorkout][exerciseIndex]?.completed[setIndex]
+                ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+                : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>';
+            button.onclick = () => completeSet(exerciseIndex, setIndex, rest);
+            row.appendChild(button);
+
+            return row;
+        }
+
+        function updateWeight(exerciseIndex, setIndex, weight) {
+            workoutData[currentWorkout][exerciseIndex].weights[setIndex] = weight;
+            saveWorkoutData();
+            updateExerciseCard(exerciseIndex);
+        }
+
+        function completeSet(exerciseIndex, setIndex, rest) {
+            const wasCompleted = workoutData[currentWorkout][exerciseIndex].completed[setIndex];
+            workoutData[currentWorkout][exerciseIndex].completed[setIndex] = !wasCompleted;
+
+            if (!wasCompleted) {
+                // Inicia o temporizador ao completar uma série
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+                Object.keys(workoutData[currentWorkout]).forEach((exIdx) => {
+                    workoutData[currentWorkout][exIdx].timer = false;
+                });
+                workoutData[currentWorkout][exerciseIndex].timer = true;
+                activeTimerExercise = exerciseIndex;
+                currentExercise = exerciseIndex;
+                timeLeft = rest;
+                isTimerPaused = false;
+
+                saveWorkoutData();
+                updateUI(); // Atualiza a UI para mostrar o temporizador
+                startTimer(exerciseIndex); // Inicia o temporizador imediatamente
+            } else {
+                // Remove o temporizador se a série for desmarcada e não houver outras concluídas
+                const hasCompletedSets = workoutData[currentWorkout][exerciseIndex].completed.some(Boolean);
+                if (!hasCompletedSets && exerciseIndex === activeTimerExercise) {
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                    }
+                    workoutData[currentWorkout][exerciseIndex].timer = false;
+                    activeTimerExercise = null;
+                }
+                saveWorkoutData();
+                updateUI();
+            }
+
+            const allSetsCompleted = workoutData[currentWorkout][exerciseIndex].completed.every(Boolean);
+            if (allSetsCompleted && exerciseIndex < workouts[currentWorkout].exercises.length - 1) {
+                currentExercise = exerciseIndex + 1;
+            }
+        }
+
+        function createTimer() {
+            const timer = document.createElement('div');
+            timer.className = 'timer';
+            timer.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span id="timerCount">${timeLeft}s</span>
+                <button class="pause-button" id="pauseButton" onclick="togglePauseTimer()">Pausar</button>
+            `;
+            return timer;
+        }
+
+        function startTimer(exerciseIndex) {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            timerInterval = setInterval(() => {
+                if (!isTimerPaused) {
+                    timeLeft--;
+                    const timerElement = document.querySelector(`.exercise-card[data-exercise-index="${exerciseIndex}"] .timer #timerCount`);
+                    if (timerElement) {
+                        timerElement.textContent = `${timeLeft}s`;
+                    }
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        workoutData[currentWorkout][exerciseIndex].timer = false;
+                        activeTimerExercise = null;
+                        saveWorkoutData();
+                        updateUI();
+                    }
+                }
+            }, 1000);
+        }
+
+        function togglePauseTimer() {
+            isTimerPaused = !isTimerPaused;
+            const pauseButton = document.getElementById('pauseButton');
+            if (pauseButton) {
+                pauseButton.textContent = isTimerPaused ? 'Retomar' : 'Pausar';
+            }
+        }
+
+        function resetWorkout() {
+            if (confirm('Tem certeza que deseja resetar todos os dados?')) {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                localStorage.removeItem('workoutData');
+                workoutData = {};
+                currentExercise = 0;
+                timeLeft = 0;
+                isTimerPaused = false;
+                activeTimerExercise = null;
+                isInitialRender = true;
+                initializeWorkoutData();
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            // Atualiza as abas
+            document.querySelectorAll('.workout-tab').forEach((tab, index) => {
+                tab.className = `workout-tab ${index === currentWorkout ? 'active' : ''}`;
+            });
+            
+            // Atualiza o progresso
+            updateProgress();
+            
+            // Recria os cartões de exercícios
+            createExerciseCards();
+        }
+
+        // Inicialização
+        initializeWorkoutData();
+        createWorkoutTabs();
+        updateUI();
+    </script>
+</body>
+</html>
