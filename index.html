@@ -6,32 +6,29 @@
     <title>Treino Masculino</title>
     <style>
         :root {
-            --beige-900: #f5f5dc; /* Bege claro como base */
-            --beige-800: #e6e6c4; /* Tom um pouco mais escuro */
-            --beige-700: #d7d7ac; /* Tom médio para contraste */
-            --black: #000000;     /* Preto principal */
-            --black-light: #333333; /* Preto suavizado */
+            --beige-900: #f5f5dc;
+            --beige-800: #e6e6c4;
+            --beige-700: #d7d7ac;
+            --black: #000000;
+            --black-light: #333333;
             --white: #ffffff;
             --gray-300: #b0b0b0;
             --gray-200: #d1d5db;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: system-ui, -apple-system, sans-serif;
-            user-select: none; /* Impede a seleção de texto em todos os elementos */
+            user-select: none;
         }
-
         body {
             min-height: 100vh;
             background: linear-gradient(to bottom right, var(--beige-900), var(--beige-800));
             color: var(--black);
             overflow-x: hidden;
-            user-select: none; /* Reforça a desativação da seleção */
+            user-select: none;
         }
-
         header {
             background: var(--beige-700);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -40,7 +37,6 @@
             top: 0;
             z-index: 10;
         }
-
         .header-content {
             max-width: 80rem;
             margin: 0 auto;
@@ -48,7 +44,6 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .logo {
             display: flex;
             align-items: center;
@@ -57,7 +52,6 @@
             font-size: 1.5rem;
             font-weight: bold;
         }
-
         .reset-button {
             display: flex;
             align-items: center;
@@ -70,18 +64,15 @@
             font-size: 0.875rem;
             transition: transform 0.2s, color 0.2s;
         }
-
         .reset-button:hover {
             color: var(--black);
             transform: scale(1.05);
         }
-
         main {
             max-width: 80rem;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
-
         .workout-tabs {
             display: flex;
             gap: 1rem;
@@ -89,7 +80,6 @@
             overflow-x: auto;
             padding-bottom: 1rem;
         }
-
         .workout-tab {
             padding: 0.75rem 1.5rem;
             border: none;
@@ -102,41 +92,34 @@
             white-space: nowrap;
             transition: transform 0.2s, background 0.3s, color 0.3s;
         }
-
         .workout-tab:hover {
             transform: scale(1.05);
         }
-
         .workout-tab.active {
             background: var(--black);
             color: var(--white);
             transform: scale(1.05);
         }
-
         .progress-bar {
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeIn 0.5s ease forwards;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .progress-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 0.5rem;
         }
-
         .progress-title {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--black);
         }
-
         .progress-track {
             flex: 1;
             height: 0.5rem;
@@ -144,24 +127,20 @@
             border-radius: 9999px;
             overflow: hidden;
         }
-
         .progress-fill {
             height: 100%;
             background: var(--black);
             transition: width 0.5s ease;
         }
-
         .progress-percent {
             font-size: 0.875rem;
             color: var(--black-light);
         }
-
         .exercise-list {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
-
         .exercise-card {
             background: var(--beige-800);
             border-radius: 0.5rem;
@@ -169,53 +148,44 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .exercise-card.initial {
             opacity: 0;
             animation: slideIn 0.5s ease forwards;
         }
-
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
         }
-
         .exercise-card.active {
             transform: scale(1);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
-
         .exercise-card:not(.active) {
             background: var(--beige-900);
             transform: scale(0.98);
         }
-
         .exercise-name {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--black);
             margin-bottom: 1rem;
         }
-
         .sets-container {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
-
         .set-row {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-
         .set-label {
             font-size: 0.875rem;
             font-weight: 500;
             color: var(--black-light);
             width: 4rem;
         }
-
         .weight-input {
             width: 5rem;
             padding: 0.25rem 0.5rem;
@@ -225,12 +195,10 @@
             color: var(--black);
             transition: border-color 0.2s;
         }
-
         .weight-input:focus {
             border-color: var(--black);
             outline: none;
         }
-
         .reps-info, .rest-info {
             display: flex;
             align-items: center;
@@ -241,20 +209,17 @@
             border-radius: 0.25rem;
             background: var(--beige-700);
         }
-
         .reps-info {
             color: var(--black);
         }
-
         .rest-info {
             color: var(--black);
         }
-
         .complete-button {
             width: 2rem;
             height: 2rem;
             border: 1px solid var(--black-light);
-            border-radius: 4px; /* Cantos levemente arredondados */
+            border-radius: 4px;
             background: var(--beige-700);
             color: var(--black-light);
             cursor: pointer;
@@ -263,17 +228,14 @@
             justify-content: center;
             transition: background 0.2s, color 0.2s;
         }
-
         .complete-button:hover {
             background: var(--gray-200);
         }
-
         .complete-button.completed {
             background: var(--black);
             color: var(--white);
             border-color: var(--black);
         }
-
         .timer {
             margin-top: 1rem;
             display: flex;
@@ -283,13 +245,11 @@
             font-size: 0.875rem;
             animation: pulse 1s infinite;
         }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
         .pause-button {
             padding: 0.25rem 0.75rem;
             border: 1px solid var(--black);
@@ -300,12 +260,10 @@
             font-size: 0.75rem;
             transition: transform 0.2s, background 0.2s;
         }
-
         .pause-button:hover {
             background: var(--beige-700);
             transform: scale(1.05);
         }
-
         @media (max-width: 640px) {
             .set-row {
                 flex-wrap: wrap;
@@ -333,10 +291,8 @@
             </button>
         </div>
     </header>
-
     <main>
         <div class="workout-tabs" id="workoutTabs"></div>
-        
         <div class="progress-bar">
             <div class="progress-header">
                 <h2 class="progress-title">Progresso</h2>
@@ -346,7 +302,6 @@
                 <span class="progress-percent" id="progressPercent">0%</span>
             </div>
         </div>
-
         <div class="exercise-list" id="exerciseList"></div>
     </main>
 
@@ -408,10 +363,10 @@
                     { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30 },
                     { name: 'Abdominal infra', sets: 4, reps: 50, rest: 30 },
                     { name: 'Abdominal na barra', sets: 4, reps: 15, rest: 30 },
-                    { name: 'Antebraço sentado', sets: 3, reps: 12, rest: 30, weight: 10 },
-                    { name: 'Antebraço inverso sentado', sets: 3, reps: 8, rest: 30, weight: 4 },
-                    { name: 'Antebraço Martelo inverso', sets: 3, reps: 8, rest: 30, weight: 8 },
-                    { name: 'Antebraço na polia com pegador', sets: 2, reps: 10, rest: 30, weight: 15 }
+                    { name: 'Flexão de punho', sets: 3, reps: 12, rest: 30, weight: 10 },
+                    { name: 'Extensão de punho', sets: 3, reps: 8, rest: 30, weight: 4 },
+                    { name: 'Rosca inversa', sets: 3, reps: 8, rest: 30, weight: 8 },
+                    { name: 'Rosca de mão na polia', sets: 2, reps: 10, rest: 30, weight: 15 }
                 ]
             }
         ];
@@ -493,7 +448,7 @@
 
         function createExerciseCards() {
             const container = document.getElementById('exerciseList');
-            container.innerHTML = ''; // Limpa completamente antes de recriar
+            container.innerHTML = '';
             const workout = workouts[currentWorkout];
             workout.exercises.forEach((exercise, exerciseIndex) => {
                 const card = document.createElement('div');
@@ -512,7 +467,6 @@
                 setsContainer.className = 'sets-container';
                 card.appendChild(setsContainer);
 
-                // Adiciona o temporizador diretamente no DOM se ativo
                 if (exerciseIndex === activeTimerExercise && workoutData[currentWorkout][exerciseIndex]?.timer) {
                     const timerElement = createTimer();
                     card.appendChild(timerElement);
@@ -533,7 +487,7 @@
             card.className = `exercise-card ${exerciseIndex === currentExercise ? 'active' : ''}`;
 
             const setsContainer = card.querySelector('.sets-container');
-            setsContainer.innerHTML = ''; // Limpa antes de recriar as séries
+            setsContainer.innerHTML = '';
 
             for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
                 const setRow = createSetRow(exerciseIndex, setIndex, exercise.reps, exercise.rest);
@@ -554,8 +508,9 @@
             input.type = 'number';
             input.className = 'weight-input';
             input.placeholder = 'Peso';
-            input.value = workoutData[currentWorkout][exerciseIndex]?.weights[setIndex] || '';
-            input.onchange = (e) => updateWeight(exerciseIndex, setIndex, e.target.value);
+            // Usa o primeiro peso como referência para todas as séries
+            input.value = workoutData[currentWorkout][exerciseIndex]?.weights[0] || '';
+            input.onchange = (e) => updateWeight(exerciseIndex, e.target.value);
             row.appendChild(input);
 
             const repsInfo = document.createElement('span');
@@ -592,8 +547,10 @@
             return row;
         }
 
-        function updateWeight(exerciseIndex, setIndex, weight) {
-            workoutData[currentWorkout][exerciseIndex].weights[setIndex] = weight;
+        function updateWeight(exerciseIndex, weight) {
+            // Atualiza todas as séries do mesmo exercício com o mesmo peso
+            const exerciseSets = workouts[currentWorkout].exercises[exerciseIndex].sets;
+            workoutData[currentWorkout][exerciseIndex].weights = Array(exerciseSets).fill(weight);
             saveWorkoutData();
             updateExerciseCard(exerciseIndex);
         }
@@ -603,7 +560,6 @@
             workoutData[currentWorkout][exerciseIndex].completed[setIndex] = !wasCompleted;
 
             if (!wasCompleted) {
-                // Inicia o temporizador ao completar uma série
                 if (timerInterval) {
                     clearInterval(timerInterval);
                 }
@@ -617,10 +573,9 @@
                 isTimerPaused = false;
 
                 saveWorkoutData();
-                updateUI(); // Atualiza a UI para mostrar o temporizador
-                startTimer(exerciseIndex); // Inicia o temporizador imediatamente
+                updateUI();
+                startTimer(exerciseIndex);
             } else {
-                // Remove o temporizador se a série for desmarcada e não houver outras concluídas
                 const hasCompletedSets = workoutData[currentWorkout][exerciseIndex].completed.some(Boolean);
                 if (!hasCompletedSets && exerciseIndex === activeTimerExercise) {
                     if (timerInterval) {
@@ -706,19 +661,13 @@
         }
 
         function updateUI() {
-            // Atualiza as abas
             document.querySelectorAll('.workout-tab').forEach((tab, index) => {
                 tab.className = `workout-tab ${index === currentWorkout ? 'active' : ''}`;
             });
-            
-            // Atualiza o progresso
             updateProgress();
-            
-            // Recria os cartões de exercícios
             createExerciseCards();
         }
 
-        // Inicialização
         initializeWorkoutData();
         createWorkoutTabs();
         updateUI();
