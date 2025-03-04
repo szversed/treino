@@ -386,13 +386,17 @@
                     workoutData[workoutIndex] = {};
                 }
                 workout.exercises.forEach((exercise, exerciseIndex) => {
-                    if (!workoutData[workoutIndex][exerciseIndex] || 
-                        workoutData[workoutIndex][exerciseIndex].weights.length !== exercise.sets) {
+                    if (!workoutData[workoutIndex][exerciseIndex]) {
                         workoutData[workoutIndex][exerciseIndex] = {
                             weights: Array(exercise.sets).fill(exercise.weight || ''),
                             completed: Array(exercise.sets).fill(false),
                             timer: false
                         };
+                    }
+                    // Garante que o número de pesos corresponda ao número de séries
+                    if (workoutData[workoutIndex][exerciseIndex].weights.length !== exercise.sets) {
+                        const currentWeight = workoutData[workoutIndex][exerciseIndex].weights[0] || exercise.weight || '';
+                        workoutData[workoutIndex][exerciseIndex].weights = Array(exercise.sets).fill(currentWeight);
                     }
                 });
             });
@@ -508,7 +512,6 @@
             input.type = 'number';
             input.className = 'weight-input';
             input.placeholder = 'Peso';
-            // Usa o primeiro peso como referência para todas as séries
             input.value = workoutData[currentWorkout][exerciseIndex]?.weights[0] || '';
             input.onchange = (e) => updateWeight(exerciseIndex, e.target.value);
             row.appendChild(input);
@@ -548,7 +551,6 @@
         }
 
         function updateWeight(exerciseIndex, weight) {
-            // Atualiza todas as séries do mesmo exercício com o mesmo peso
             const exerciseSets = workouts[currentWorkout].exercises[exerciseIndex].sets;
             workoutData[currentWorkout][exerciseIndex].weights = Array(exerciseSets).fill(weight);
             saveWorkoutData();
@@ -643,19 +645,28 @@
         }
 
         function resetWorkout() {
-            if (confirm('Tem certeza que deseja resetar todos os dados?')) {
+            if (confirm('Tem certeza que deseja resetar o progresso? Os pesos inseridos serão mantidos.')) {
                 if (timerInterval) {
                     clearInterval(timerInterval);
                     timerInterval = null;
                 }
-                localStorage.removeItem('workoutData');
-                workoutData = {};
+                // Preserva os pesos existentes e reseta apenas o progresso
+                workouts.forEach((workout, workoutIndex) => {
+                    workout.exercises.forEach((exercise, exerciseIndex) => {
+                        const currentWeight = workoutData[workoutIndex][exerciseIndex]?.weights[0] || exercise.weight || '';
+                        workoutData[workoutIndex][exerciseIndex] = {
+                            weights: Array(exercise.sets).fill(currentWeight),
+                            completed: Array(exercise.sets).fill(false),
+                            timer: false
+                        };
+                    });
+                });
                 currentExercise = 0;
                 timeLeft = 0;
                 isTimerPaused = false;
                 activeTimerExercise = null;
                 isInitialRender = true;
-                initializeWorkoutData();
+                saveWorkoutData();
                 updateUI();
             }
         }
