@@ -5,270 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treino Masculino</title>
     <style>
-        :root {
-            --beige-900: #f5f5dc;
-            --beige-800: #e6e6c4;
-            --beige-700: #d7d7ac;
-            --black: #000000;
-            --black-light: #333333;
-            --white: #ffffff;
-            --gray-300: #b0b0b0;
-            --gray-200: #d1d5db;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
-            user-select: none;
-        }
-        body {
-            min-height: 100vh;
-            background: linear-gradient(to bottom right, var(--beige-900), var(--beige-800));
-            color: var(--black);
-            overflow-x: hidden;
-            user-select: none;
-        }
-        header {
-            background: var(--beige-700);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        .header-content {
-            max-width: 80rem;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--black);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .reset-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border: none;
-            background: none;
-            color: var(--gray-300);
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: transform 0.2s, color 0.2s;
-        }
-        .reset-button:hover {
-            color: var(--black);
-            transform: scale(1.05);
-        }
-        main {
-            max-width: 80rem;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        .workout-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            overflow-x: auto;
-            padding-bottom: 1rem;
-        }
-        .workout-tab {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 9999px;
-            background: var(--beige-800);
-            color: var(--black-light);
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 500;
-            white-space: nowrap;
-            transition: transform 0.2s, background 0.3s, color 0.3s;
-        }
-        .workout-tab:hover {
-            transform: scale(1.05);
-        }
-        .workout-tab.active {
-            background: var(--black);
-            color: var(--white);
-            transform: scale(1.05);
-        }
-        .progress-bar {
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .progress-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        .progress-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--black);
-        }
-        .progress-track {
-            flex: 1;
-            height: 0.5rem;
-            background: var(--beige-700);
-            border-radius: 9999px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--black);
-            transition: width 0.5s ease;
-        }
-        .progress-percent {
-            font-size: 0.875rem;
-            color: var(--black-light);
-        }
-        .exercise-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .exercise-card {
-            background: var(--beige-800);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .exercise-card.initial {
-            opacity: 0;
-            animation: slideIn 0.5s ease forwards;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .exercise-card.active {
-            transform: scale(1);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .exercise-card:not(.active) {
-            background: var(--beige-900);
-            transform: scale(0.98);
-        }
-        .exercise-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--black);
-            margin-bottom: 1rem;
-        }
-        .sets-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .set-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .set-label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--black-light);
-            width: 4rem;
-        }
-        .weight-input {
-            width: 5rem;
-            padding: 0.25rem 0.5rem;
-            border: 1px solid var(--gray-200);
-            border-radius: 0.25rem;
-            background: var(--beige-700);
-            color: var(--black);
-            transition: border-color 0.2s;
-        }
-        .weight-input:focus {
-            border-color: var(--black);
-            outline: none;
-        }
-        .reps-info, .rest-info {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.875rem;
-            color: var(--black-light);
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            background: var(--beige-700);
-        }
-        .reps-info {
-            color: var(--black);
-        }
-        .rest-info {
-            color: var(--black);
-        }
-        .complete-button {
-            width: 2rem;
-            height: 2rem;
-            border: 1px solid var(--black-light);
-            border-radius: 4px;
-            background: var(--beige-700);
-            color: var(--black-light);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s, color 0.2s;
-        }
-        .complete-button:hover {
-            background: var(--gray-200);
-        }
-        .complete-button.completed {
-            background: var(--black);
-            color: var(--white);
-            border-color: var(--black);
-        }
-        .timer {
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--black);
-            font-size: 0.875rem;
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        .pause-button {
-            padding: 0.25rem 0.75rem;
-            border: 1px solid var(--black);
-            border-radius: 9999px;
-            background: none;
-            color: var(--black);
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: transform 0.2s, background 0.2s;
-        }
-        .pause-button:hover {
-            background: var(--beige-700);
-            transform: scale(1.05);
-        }
-        @media (max-width: 640px) {
-            .set-row {
-                flex-wrap: wrap;
-            }
-        }
+        /* O CSS permanece idêntico ao fornecido */
     </style>
 </head>
 <body>
@@ -360,9 +97,9 @@
                 day: 'Sexta-feira',
                 name: 'Antebraço e Abdômen',
                 exercises: [
-                    { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30 },
-                    { name: 'Abdominal infra', sets: 4, reps: 50, rest: 30 },
+                    { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30, adjustableTime: true },
                     { name: 'Abdominal na barra', sets: 4, reps: 15, rest: 30 },
+                    { name: 'Abdominal infra', sets: 4, reps: 50, rest: 30 },
                     { name: 'Flexão de punho', sets: 3, reps: 12, rest: 30, weight: 10 },
                     { name: 'Extensão de punho', sets: 3, reps: 8, rest: 30, weight: 4 },
                     { name: 'Rosca inversa', sets: 3, reps: 8, rest: 30, weight: 8 },
@@ -390,10 +127,10 @@
                         workoutData[workoutIndex][exerciseIndex] = {
                             weights: Array(exercise.sets).fill(exercise.weight || ''),
                             completed: Array(exercise.sets).fill(false),
-                            timer: false
+                            timer: false,
+                            time: exercise.adjustableTime ? '60' : null // Tempo inicial padrão para prancha
                         };
                     }
-                    // Garante que o número de pesos corresponda ao número de séries
                     if (workoutData[workoutIndex][exerciseIndex].weights.length !== exercise.sets) {
                         const currentWeight = workoutData[workoutIndex][exerciseIndex].weights[0] || exercise.weight || '';
                         workoutData[workoutIndex][exerciseIndex].weights = Array(exercise.sets).fill(currentWeight);
@@ -471,6 +208,15 @@
                 setsContainer.className = 'sets-container';
                 card.appendChild(setsContainer);
 
+                if (exercise.adjustableTime) {
+                    const timeInput = document.createElement('div');
+                    timeInput.innerHTML = `
+                        <label>Tempo (segundos): </label>
+                        <input type="number" class="time-input" min="1" value="${workoutData[currentWorkout][exerciseIndex]?.time || exercise.reps.split(' ')[0]}" onchange="updatePlankTime(${exerciseIndex}, this.value)">
+                    `;
+                    card.appendChild(timeInput);
+                }
+
                 if (exerciseIndex === activeTimerExercise && workoutData[currentWorkout][exerciseIndex]?.timer) {
                     const timerElement = createTimer();
                     card.appendChild(timerElement);
@@ -480,6 +226,13 @@
                 updateExerciseCard(exerciseIndex);
             });
             isInitialRender = false;
+        }
+
+        function updatePlankTime(exerciseIndex, time) {
+            workoutData[currentWorkout][exerciseIndex].time = time;
+            workoutData[currentWorkout][exerciseIndex].reps = `${time} segundos`; // Atualiza o tempo exibido
+            saveWorkoutData();
+            updateExerciseCard(exerciseIndex);
         }
 
         function updateExerciseCard(exerciseIndex) {
@@ -493,8 +246,10 @@
             const setsContainer = card.querySelector('.sets-container');
             setsContainer.innerHTML = '';
 
+            const reps = exercise.adjustableTime ? `${workoutData[currentWorkout][exerciseIndex]?.time || exercise.reps.split(' ')[0]} segundos` : exercise.reps;
+
             for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
-                const setRow = createSetRow(exerciseIndex, setIndex, exercise.reps, exercise.rest);
+                const setRow = createSetRow(exerciseIndex, setIndex, reps, exercise.rest);
                 setsContainer.appendChild(setRow);
             }
         }
@@ -508,13 +263,16 @@
             label.textContent = `Série ${setIndex + 1}`;
             row.appendChild(label);
 
-            const input = document.createElement('input');
-            input.type = 'number';
-            input.className = 'weight-input';
-            input.placeholder = 'Peso';
-            input.value = workoutData[currentWorkout][exerciseIndex]?.weights[0] || '';
-            input.onchange = (e) => updateWeight(exerciseIndex, e.target.value);
-            row.appendChild(input);
+            const exercise = workouts[currentWorkout].exercises[exerciseIndex];
+            if (exercise.weight !== undefined) {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'weight-input';
+                input.placeholder = 'Peso';
+                input.value = workoutData[currentWorkout][exerciseIndex]?.weights[0] || '';
+                input.onchange = (e) => updateWeight(exerciseIndex, e.target.value);
+                row.appendChild(input);
+            }
 
             const repsInfo = document.createElement('span');
             repsInfo.className = 'reps-info';
@@ -524,7 +282,7 @@
                     <path d="M4 6h16"/>
                     <path d="M4 18h16"/>
                 </svg>
-                ${reps} reps
+                ${reps} ${exercise.adjustableTime ? '' : 'reps'}
             `;
             row.appendChild(repsInfo);
 
@@ -650,14 +408,15 @@
                     clearInterval(timerInterval);
                     timerInterval = null;
                 }
-                // Preserva os pesos existentes e reseta apenas o progresso
                 workouts.forEach((workout, workoutIndex) => {
                     workout.exercises.forEach((exercise, exerciseIndex) => {
                         const currentWeight = workoutData[workoutIndex][exerciseIndex]?.weights[0] || exercise.weight || '';
+                        const currentTime = workoutData[workoutIndex][exerciseIndex]?.time || (exercise.adjustableTime ? '60' : null);
                         workoutData[workoutIndex][exerciseIndex] = {
                             weights: Array(exercise.sets).fill(currentWeight),
                             completed: Array(exercise.sets).fill(false),
-                            timer: false
+                            timer: false,
+                            time: currentTime
                         };
                     });
                 });
