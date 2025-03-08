@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treino Masculino</title>
     <style>
+        /* Tema Padrão */
         :root {
             --beige-900: #f5f5dc;
             --beige-800: #e6e6c4;
@@ -18,6 +19,82 @@
             --red: #dc3545;
             --blue: #007bff;
         }
+
+        /* Tema Escuro Clássico */
+        .dark-classic {
+            --beige-900: #1a1a1a;
+            --beige-800: #2d2d2d;
+            --beige-700: #3d3d3d;
+            --black: #ffffff;
+            --black-light: #b0b0b0;
+            --white: #1a1a1a;
+            --gray-300: #4a4a4a;
+            --gray-200: #6d6d6d;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
+        }
+
+        /* Tema Noturno Azul */
+        .night-blue {
+            --beige-900: #0a192f;
+            --beige-800: #1a2f4a;
+            --beige-700: #2a4466;
+            --black: #ffffff;
+            --black-light: #b0b0b0;
+            --white: #0a192f;
+            --gray-300: #4a4a4a;
+            --gray-200: #6d6d6d;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
+        }
+
+        /* Tema Verde Escuro */
+        .dark-green {
+            --beige-900: #1e3a1e;
+            --beige-800: #2d4a2d;
+            --beige-700: #3d5a3d;
+            --black: #ffffff;
+            --black-light: #b0b0b0;
+            --white: #1e3a1e;
+            --gray-300: #4a4a4a;
+            --gray-200: #6d6d6d;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
+        }
+
+        /* Tema Roxo Profundo */
+        .deep-purple {
+            --beige-900: #2e1a47;
+            --beige-800: #3d2a5a;
+            --beige-700: #4d3a6d;
+            --black: #ffffff;
+            --black-light: #b0b0b0;
+            --white: #2e1a47;
+            --gray-300: #4a4a4a;
+            --gray-200: #6d6d6d;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
+        }
+
+        /* Tema Cinza Industrial */
+        .industrial-gray {
+            --beige-900: #2d2d2d;
+            --beige-800: #3d3d3d;
+            --beige-700: #4d4d4d;
+            --black: #ffffff;
+            --black-light: #b0b0b0;
+            --white: #2d2d2d;
+            --gray-300: #4a4a4a;
+            --gray-200: #6d6d6d;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -25,12 +102,14 @@
             font-family: system-ui, -apple-system, sans-serif;
             user-select: none;
         }
+
         body {
             min-height: 100vh;
             background: linear-gradient(to bottom right, var(--beige-900), var(--beige-800));
             color: var(--black);
             overflow-x: hidden;
         }
+
         header {
             background: var(--beige-700);
             padding: 1rem;
@@ -39,6 +118,7 @@
             z-index: 10;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .header-content {
             max-width: 80rem;
             margin: 0 auto;
@@ -46,6 +126,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .logo {
             display: flex;
             align-items: center;
@@ -54,6 +135,7 @@
             font-size: 1.75rem;
             font-weight: 700;
         }
+
         .reset-button {
             display: flex;
             align-items: center;
@@ -68,15 +150,18 @@
             font-weight: 500;
             transition: transform 0.2s, background 0.2s;
         }
+
         .reset-button:hover {
             background: #c82333;
             transform: scale(1.05);
         }
+
         main {
             max-width: 80rem;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
+
         .workout-tabs {
             display: flex;
             gap: 0.75rem;
@@ -84,6 +169,7 @@
             overflow-x: auto;
             padding-bottom: 0.5rem;
         }
+
         .workout-tab {
             padding: 0.75rem 1.5rem;
             border: none;
@@ -96,35 +182,42 @@
             white-space: nowrap;
             transition: all 0.3s ease;
         }
+
         .workout-tab:hover {
             background: var(--beige-700);
             transform: scale(1.05);
         }
+
         .workout-tab.active {
             background: var(--black);
             color: var(--white);
             transform: scale(1.05);
         }
+
         .progress-bar {
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeIn 0.5s ease forwards;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .progress-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 0.75rem;
         }
+
         .progress-title {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--black);
         }
+
         .progress-track {
             flex: 1;
             height: 0.75rem;
@@ -132,21 +225,25 @@
             border-radius: 9999px;
             overflow: hidden;
         }
+
         .progress-fill {
             height: 100%;
             background: var(--green);
             transition: width 0.5s ease;
         }
+
         .progress-percent {
             font-size: 1rem;
             font-weight: 600;
             color: var(--black);
         }
+
         .exercise-list {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
+
         .exercise-card {
             background: var(--white);
             border-radius: 0.75rem;
@@ -154,41 +251,49 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .exercise-card.initial {
             opacity: 0;
             animation: slideIn 0.5s ease forwards;
         }
+
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .exercise-card.active {
             transform: scale(1.02);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             border-left: 4px solid var(--green);
         }
+
         .exercise-name {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--black);
             margin-bottom: 1rem;
         }
+
         .config-container {
             display: flex;
             gap: 1rem;
             margin-bottom: 1.5rem;
             align-items: center;
         }
+
         .config-label {
             font-size: 0.875rem;
             font-weight: 600;
             color: var(--black-light);
         }
+
         .sets-container {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
+
         .set-row {
             display: flex;
             align-items: center;
@@ -197,12 +302,14 @@
             background: var(--beige-900);
             border-radius: 0.5rem;
         }
+
         .set-label {
             font-size: 0.875rem;
             font-weight: 600;
             color: var(--black);
             width: 4rem;
         }
+
         .weight-input, .time-input, .sets-input, .reps-input {
             width: 5rem;
             padding: 0.5rem;
@@ -213,10 +320,12 @@
             font-size: 0.875rem;
             transition: border-color 0.2s;
         }
+
         .weight-input:focus, .time-input:focus, .sets-input:focus, .reps-input:focus {
             border-color: var(--blue);
             outline: none;
         }
+
         .reps-info, .rest-info {
             display: flex;
             align-items: center;
@@ -228,6 +337,7 @@
             border-radius: 0.25rem;
             background: var(--beige-800);
         }
+
         .complete-button {
             width: 2.5rem;
             height: 2.5rem;
@@ -240,20 +350,25 @@
             justify-content: center;
             transition: all 0.2s ease;
         }
+
         .complete-button:hover {
             background: var(--blue);
         }
+
         .complete-button.completed {
             background: var(--green);
         }
+
         .complete-button svg {
             width: 1.25rem;
             height: 1.25rem;
             stroke: var(--black);
         }
+
         .complete-button.completed svg {
             stroke: var(--white);
         }
+
         .timer {
             margin-top: 1.5rem;
             display: flex;
@@ -264,11 +379,13 @@
             font-weight: 600;
             animation: pulse 1s infinite;
         }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
+
         .pause-button {
             padding: 0.5rem 1rem;
             border: 1px solid var(--black);
@@ -280,11 +397,13 @@
             font-weight: 500;
             transition: all 0.2s ease;
         }
+
         .pause-button:hover {
             background: var(--blue);
             color: var(--white);
             border-color: var(--blue);
         }
+
         @media (max-width: 640px) {
             .set-row {
                 flex-wrap: wrap;
@@ -297,7 +416,7 @@
         }
     </style>
 </head>
-<body>
+<body class="default">
     <header>
         <div class="header-content">
             <div class="logo">
@@ -308,13 +427,23 @@
                 </svg>
                 Treino Masculino
             </div>
-            <button class="reset-button" onclick="resetWorkout()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                    <path d="M3 3v5h5"/>
-                </svg>
-                Resetar
-            </button>
+            <div>
+                <select id="themeSelector" onchange="changeTheme(this.value)">
+                    <option value="default">Padrão</option>
+                    <option value="dark-classic">Escuro Clássico</option>
+                    <option value="night-blue">Noturno Azul</option>
+                    <option value="dark-green">Verde Escuro</option>
+                    <option value="deep-purple">Roxo Profundo</option>
+                    <option value="industrial-gray">Cinza Industrial</option>
+                </select>
+                <button class="reset-button" onclick="resetWorkout()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    Resetar
+                </button>
+            </div>
         </div>
     </header>
     <main>
@@ -341,7 +470,7 @@
                     { name: 'Supino reto com barra', sets: 3, reps: 8, rest: 60, weight: 13 },
                     { name: 'Supino inclinado com halteres', sets: 3, reps: 8, rest: 60, weight: 12 },
                     { name: 'Crucifixo na máquina', sets: 3, reps: 8, rest: 60, weight: 30 },
-                    { name: 'Tríceps Carter', sets: 3, reps: 12, rest: 45, weight: 10 }, // Revertido
+                    { name: 'Tríceps Carter', sets: 3, reps: 12, rest: 45, weight: 10 },
                     { name: 'Tríceps francês com barra', sets: 3, reps: 8, rest: 60, weight: 20 }
                 ]
             },
@@ -351,8 +480,8 @@
                 exercises: [
                     { name: 'Puxada alta', sets: 3, reps: 8, rest: 60, weight: 40 },
                     { name: 'Remada baixa', sets: 3, reps: 8, rest: 60, weight: 35 },
-                    { name: 'Remada unilateral na polia', sets: 3, reps: 8, rest: 60, weight: 30 }, // Ajustado pra polia
-                    { name: 'Remada alta no cabinho', sets: 3, reps: 8, rest: 60, weight: 35 }, // Revertido
+                    { name: 'Remada unilateral na polia', sets: 3, reps: 8, rest: 60, weight: 30 },
+                    { name: 'Remada alta no cabinho', sets: 3, reps: 8, rest: 60, weight: 35 },
                     { name: 'Elevação lateral na polia', sets: 3, reps: 8, rest: 60, weight: 5 },
                     { name: 'Elevação frontal na polia', sets: 3, reps: 8, rest: 60, weight: 15 }
                 ]
@@ -363,12 +492,12 @@
                 exercises: [
                     { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30 },
                     { name: 'Panturrilha em pé', sets: 4, reps: 30, rest: 35 },
-                    { name: 'Agachamento Smith', sets: 3, reps: 8, rest: 60 }, // Revertido
+                    { name: 'Agachamento Smith', sets: 3, reps: 8, rest: 60 },
                     { name: 'Leg press', sets: 3, reps: 8, rest: 60, weight: 50 },
                     { name: 'Hack squat', sets: 4, reps: 12, rest: 60, weight: 30 },
                     { name: 'Cadeira extensora', sets: 3, reps: 8, rest: 60, weight: 20 },
-                    { name: 'Cadeira flexora', sets: 3, reps: 8, rest: 60, weight: 20 }, // Revertido (era "Mesa flexora" no original, ajustado pra "Cadeira flexora" como pedido)
-                    { name: 'Cadeira flexora', sets: 1, reps: 'Até a falha', rest: 60 } // Revertido de "Stiff" pra "Cadeira flexora" (corrigido de "Flexão cadeira extensora")
+                    { name: 'Cadeira flexora', sets: 3, reps: 8, rest: 60, weight: 20 },
+                    { name: 'Cadeira flexora', sets: 1, reps: 'Até a falha', rest: 60 }
                 ]
             },
             {
@@ -777,6 +906,10 @@
             });
             updateProgress();
             createExerciseCards();
+        }
+
+        function changeTheme(theme) {
+            document.body.className = theme;
         }
 
         initializeWorkoutData();
