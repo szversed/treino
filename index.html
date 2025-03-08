@@ -9,11 +9,14 @@
             --beige-900: #f5f5dc;
             --beige-800: #e6e6c4;
             --beige-700: #d7d7ac;
-            --black: #000000;
-            --black-light: #333333;
+            --black: #1a1a1a;
+            --black-light: #4a4a4a;
             --white: #ffffff;
             --gray-300: #b0b0b0;
             --gray-200: #d1d5db;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
         }
         * {
             margin: 0;
@@ -27,15 +30,14 @@
             background: linear-gradient(to bottom right, var(--beige-900), var(--beige-800));
             color: var(--black);
             overflow-x: hidden;
-            user-select: none;
         }
         header {
             background: var(--beige-700);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem 1rem;
+            padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .header-content {
             max-width: 80rem;
@@ -49,23 +51,25 @@
             align-items: center;
             gap: 0.5rem;
             color: var(--black);
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.75rem;
+            font-weight: 700;
         }
         .reset-button {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            border: none;
-            background: none;
-            color: var(--gray-300);
+            border: 1px solid var(--red);
+            border-radius: 9999px;
+            background: var(--red);
+            color: var(--white);
             cursor: pointer;
             font-size: 0.875rem;
-            transition: transform 0.2s, color 0.2s;
+            font-weight: 500;
+            transition: transform 0.2s, background 0.2s;
         }
         .reset-button:hover {
-            color: var(--black);
+            background: #c82333;
             transform: scale(1.05);
         }
         main {
@@ -75,10 +79,10 @@
         }
         .workout-tabs {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             margin-bottom: 2rem;
             overflow-x: auto;
-            padding-bottom: 1rem;
+            padding-bottom: 0.5rem;
         }
         .workout-tab {
             padding: 0.75rem 1.5rem;
@@ -88,11 +92,12 @@
             color: var(--black-light);
             cursor: pointer;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             white-space: nowrap;
-            transition: transform 0.2s, background 0.3s, color 0.3s;
+            transition: all 0.3s ease;
         }
         .workout-tab:hover {
+            background: var(--beige-700);
             transform: scale(1.05);
         }
         .workout-tab.active {
@@ -113,28 +118,29 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
         .progress-title {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--black);
         }
         .progress-track {
             flex: 1;
-            height: 0.5rem;
-            background: var(--beige-700);
+            height: 0.75rem;
+            background: var(--gray-200);
             border-radius: 9999px;
             overflow: hidden;
         }
         .progress-fill {
             height: 100%;
-            background: var(--black);
+            background: var(--green);
             transition: width 0.5s ease;
         }
         .progress-percent {
-            font-size: 0.875rem;
-            color: var(--black-light);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
         }
         .exercise-list {
             display: flex;
@@ -142,33 +148,41 @@
             gap: 1.5rem;
         }
         .exercise-card {
-            background: var(--beige-800);
-            border-radius: 0.5rem;
+            background: var(--white);
+            border-radius: 0.75rem;
             padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .exercise-card.initial {
             opacity: 0;
             animation: slideIn 0.5s ease forwards;
         }
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .exercise-card.active {
-            transform: scale(1);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .exercise-card:not(.active) {
-            background: var(--beige-900);
-            transform: scale(0.98);
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid var(--green);
         }
         .exercise-name {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--black);
             margin-bottom: 1rem;
+        }
+        .config-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+        .config-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--black-light);
         }
         .sets-container {
             display: flex;
@@ -179,94 +193,106 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            padding: 0.5rem;
+            background: var(--beige-900);
+            border-radius: 0.5rem;
         }
         .set-label {
             font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--black-light);
+            font-weight: 600;
+            color: var(--black);
             width: 4rem;
         }
-        .weight-input, .time-input {
+        .weight-input, .time-input, .sets-input, .reps-input {
             width: 5rem;
-            padding: 0.25rem 0.5rem;
+            padding: 0.5rem;
             border: 1px solid var(--gray-200);
             border-radius: 0.25rem;
-            background: var(--beige-700);
+            background: var(--white);
             color: var(--black);
+            font-size: 0.875rem;
             transition: border-color 0.2s;
         }
-        .weight-input:focus, .time-input:focus {
-            border-color: var(--black);
+        .weight-input:focus, .time-input:focus, .sets-input:focus, .reps-input:focus {
+            border-color: var(--blue);
             outline: none;
         }
         .reps-info, .rest-info {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.5rem;
             font-size: 0.875rem;
-            color: var(--black-light);
-            padding: 0.25rem 0.5rem;
+            font-weight: 500;
+            color: var(--black);
+            padding: 0.5rem 0.75rem;
             border-radius: 0.25rem;
-            background: var(--beige-700);
-        }
-        .reps-info {
-            color: var(--black);
-        }
-        .rest-info {
-            color: var(--black);
+            background: var(--beige-800);
         }
         .complete-button {
-            width: 2rem;
-            height: 2rem;
-            border: 1px solid var(--black-light);
-            border-radius: 4px;
-            background: var(--beige-700);
-            color: var(--black-light);
+            width: 2.5rem;
+            height: 2.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: var(--gray-200);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s, color 0.2s;
+            transition: all 0.2s ease;
         }
         .complete-button:hover {
-            background: var(--gray-200);
+            background: var(--blue);
         }
         .complete-button.completed {
-            background: var(--black);
-            color: var(--white);
-            border-color: var(--black);
+            background: var(--green);
+        }
+        .complete-button svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke: var(--black);
+        }
+        .complete-button.completed svg {
+            stroke: var(--white);
         }
         .timer {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             color: var(--black);
-            font-size: 0.875rem;
+            font-size: 1rem;
+            font-weight: 600;
             animation: pulse 1s infinite;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
         .pause-button {
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1rem;
             border: 1px solid var(--black);
             border-radius: 9999px;
-            background: none;
+            background: var(--white);
             color: var(--black);
             cursor: pointer;
-            font-size: 0.75rem;
-            transition: transform 0.2s, background 0.2s;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
         .pause-button:hover {
-            background: var(--beige-700);
-            transform: scale(1.05);
+            background: var(--blue);
+            color: var(--white);
+            border-color: var(--blue);
         }
         @media (max-width: 640px) {
             .set-row {
                 flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .config-container {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -315,8 +341,8 @@
                     { name: 'Supino reto com barra', sets: 3, reps: 8, rest: 60, weight: 13 },
                     { name: 'Supino inclinado com halteres', sets: 3, reps: 8, rest: 60, weight: 12 },
                     { name: 'Crucifixo na máquina', sets: 3, reps: 8, rest: 60, weight: 30 },
-                    { name: 'Tríceps Carter', sets: 3, reps: 12, rest: 45, weight: 10 },
-                    { name: 'Tríceps Francês com Barra', sets: 3, reps: 8, rest: 60, weight: 20 }
+                    { name: 'Tríceps Carter', sets: 3, reps: 12, rest: 45, weight: 10 }, // Revertido
+                    { name: 'Tríceps francês com barra', sets: 3, reps: 8, rest: 60, weight: 20 }
                 ]
             },
             {
@@ -325,8 +351,8 @@
                 exercises: [
                     { name: 'Puxada alta', sets: 3, reps: 8, rest: 60, weight: 40 },
                     { name: 'Remada baixa', sets: 3, reps: 8, rest: 60, weight: 35 },
-                    { name: 'Remada unilateral', sets: 3, reps: 8, rest: 60, weight: 30 },
-                    { name: 'Remada alta no cabinho', sets: 3, reps: 8, rest: 60, weight: 35 },
+                    { name: 'Remada unilateral na polia', sets: 3, reps: 8, rest: 60, weight: 30 }, // Ajustado pra polia
+                    { name: 'Remada alta no cabinho', sets: 3, reps: 8, rest: 60, weight: 35 }, // Revertido
                     { name: 'Elevação lateral na polia', sets: 3, reps: 8, rest: 60, weight: 5 },
                     { name: 'Elevação frontal na polia', sets: 3, reps: 8, rest: 60, weight: 15 }
                 ]
@@ -336,23 +362,23 @@
                 name: 'Perna',
                 exercises: [
                     { name: 'Prancha', sets: 3, reps: '60 segundos', rest: 30 },
-                    { name: 'Panturrilha', sets: 4, reps: 30, rest: 35 },
-                    { name: 'Agachamento Livre Smith', sets: 3, reps: 8, rest: 60 },
-                    { name: 'Legpress', sets: 3, reps: 8, rest: 60 },
-                    { name: 'Hack', sets: 4, reps: 12, rest: 60 },
-                    { name: 'Cadeira extensora', sets: 3, reps: 8, rest: 60 },
-                    { name: 'Mesa flexora', sets: 3, reps: 8, rest: 60 },
-                    { name: 'Flexão cadeira extensora', sets: 1, reps: 'Até a falha', rest: 60 }
+                    { name: 'Panturrilha em pé', sets: 4, reps: 30, rest: 35 },
+                    { name: 'Agachamento Smith', sets: 3, reps: 8, rest: 60 }, // Revertido
+                    { name: 'Leg press', sets: 3, reps: 8, rest: 60, weight: 50 },
+                    { name: 'Hack squat', sets: 4, reps: 12, rest: 60, weight: 30 },
+                    { name: 'Cadeira extensora', sets: 3, reps: 8, rest: 60, weight: 20 },
+                    { name: 'Cadeira flexora', sets: 3, reps: 8, rest: 60, weight: 20 }, // Revertido (era "Mesa flexora" no original, ajustado pra "Cadeira flexora" como pedido)
+                    { name: 'Cadeira flexora', sets: 1, reps: 'Até a falha', rest: 60 } // Revertido de "Stiff" pra "Cadeira flexora" (corrigido de "Flexão cadeira extensora")
                 ]
             },
             {
                 day: 'Quinta-feira',
                 name: 'Braço e Trapézio',
                 exercises: [
-                    { name: 'Rosca Scott barra W', sets: 3, reps: 8, rest: 90, weight: 16 },
-                    { name: 'Bíceps na polia', sets: 3, reps: 8, rest: 60, weight: 25 },
-                    { name: 'Rosca direta com halteres no banco', sets: 3, reps: 8, rest: 60, weight: 6 },
-                    { name: 'Crucifixo inverso', sets: 3, reps: 8, rest: 60, weight: 25 },
+                    { name: 'Rosca Scott com barra W', sets: 3, reps: 8, rest: 90, weight: 16 },
+                    { name: 'Rosca martelo na polia com corda', sets: 3, reps: 8, rest: 60, weight: 20 },
+                    { name: 'Rosca inclinado com halteres', sets: 3, reps: 8, rest: 60, weight: 8 },
+                    { name: 'Crucifixo inverso na polia', sets: 3, reps: 8, rest: 60, weight: 25 },
                     { name: 'Encolhimento de ombros com halteres', sets: 3, reps: 12, rest: 60, weight: 15 }
                 ]
             },
@@ -366,7 +392,7 @@
                     { name: 'Flexão de punho', sets: 3, reps: 12, rest: 30, weight: 10 },
                     { name: 'Extensão de punho', sets: 3, reps: 8, rest: 30, weight: 4 },
                     { name: 'Rosca inversa', sets: 3, reps: 8, rest: 30, weight: 8 },
-                    { name: 'Rosca de mão na polia', sets: 2, reps: 10, rest: 30, weight: 15 }
+                    { name: 'Rosca de punho na polia', sets: 2, reps: 10, rest: 30, weight: 15 }
                 ]
             }
         ];
@@ -388,15 +414,13 @@
                 workout.exercises.forEach((exercise, exerciseIndex) => {
                     if (!workoutData[workoutIndex][exerciseIndex]) {
                         workoutData[workoutIndex][exerciseIndex] = {
+                            sets: exercise.sets,
+                            reps: exercise.reps,
                             weights: Array(exercise.sets).fill(exercise.weight || ''),
                             completed: Array(exercise.sets).fill(false),
                             timer: false,
                             time: exercise.adjustableTime ? '60' : null
                         };
-                    }
-                    if (workoutData[workoutIndex][exerciseIndex].weights.length !== exercise.sets) {
-                        const currentWeight = workoutData[workoutIndex][exerciseIndex].weights[0] || exercise.weight || '';
-                        workoutData[workoutIndex][exerciseIndex].weights = Array(exercise.sets).fill(currentWeight);
                     }
                 });
             });
@@ -437,7 +461,8 @@
             let total = 0;
 
             workout.exercises.forEach((exercise, exerciseIndex) => {
-                total += exercise.sets;
+                const sets = workoutState[exerciseIndex]?.sets || exercise.sets;
+                total += sets;
                 completed += (workoutState[exerciseIndex]?.completed || []).filter(Boolean).length;
             });
 
@@ -467,14 +492,48 @@
                 name.textContent = exercise.name;
                 card.appendChild(name);
 
+                const configContainer = document.createElement('div');
+                configContainer.className = 'config-container';
+
+                const setsLabel = document.createElement('span');
+                setsLabel.className = 'config-label';
+                setsLabel.textContent = 'Séries:';
+                configContainer.appendChild(setsLabel);
+
+                const setsInput = document.createElement('input');
+                setsInput.type = 'number';
+                setsInput.className = 'sets-input';
+                setsInput.min = '1';
+                setsInput.value = workoutData[currentWorkout][exerciseIndex]?.sets || exercise.sets;
+                setsInput.onchange = (e) => updateSets(exerciseIndex, parseInt(e.target.value));
+                configContainer.appendChild(setsInput);
+
+                const repsLabel = document.createElement('span');
+                repsLabel.className = 'config-label';
+                repsLabel.textContent = 'Reps:';
+                configContainer.appendChild(repsLabel);
+
+                const repsInput = document.createElement('input');
+                repsInput.type = 'number';
+                repsInput.className = 'reps-input';
+                repsInput.min = '1';
+                repsInput.value = typeof workoutData[currentWorkout][exerciseIndex]?.reps === 'string' ? 
+                    workoutData[currentWorkout][exerciseIndex].reps.split(' ')[0] : 
+                    workoutData[currentWorkout][exerciseIndex]?.reps || exercise.reps;
+                repsInput.onchange = (e) => updateReps(exerciseIndex, parseInt(e.target.value));
+                configContainer.appendChild(repsInput);
+
+                card.appendChild(configContainer);
+
                 const setsContainer = document.createElement('div');
                 setsContainer.className = 'sets-container';
                 card.appendChild(setsContainer);
 
                 if (exercise.adjustableTime) {
                     const timeInput = document.createElement('div');
+                    timeInput.className = 'config-container';
                     timeInput.innerHTML = `
-                        <label>Tempo (segundos): </label>
+                        <span class="config-label">Tempo (s):</span>
                         <input type="number" class="time-input" min="1" value="${workoutData[currentWorkout][exerciseIndex]?.time || exercise.reps.split(' ')[0]}" onchange="updatePlankTime(${exerciseIndex}, this.value)">
                     `;
                     card.appendChild(timeInput);
@@ -491,8 +550,23 @@
             isInitialRender = false;
         }
 
+        function updateSets(exerciseIndex, sets) {
+            workoutData[currentWorkout][exerciseIndex].sets = sets;
+            workoutData[currentWorkout][exerciseIndex].weights = Array(sets).fill(workoutData[currentWorkout][exerciseIndex].weights[0] || '');
+            workoutData[currentWorkout][exerciseIndex].completed = Array(sets).fill(false);
+            saveWorkoutData();
+            updateExerciseCard(exerciseIndex);
+        }
+
+        function updateReps(exerciseIndex, reps) {
+            workoutData[currentWorkout][exerciseIndex].reps = reps;
+            saveWorkoutData();
+            updateExerciseCard(exerciseIndex);
+        }
+
         function updatePlankTime(exerciseIndex, time) {
             workoutData[currentWorkout][exerciseIndex].time = time;
+            workoutData[currentWorkout][exerciseIndex].reps = `${time} segundos`;
             saveWorkoutData();
             updateExerciseCard(exerciseIndex);
         }
@@ -508,9 +582,12 @@
             const setsContainer = card.querySelector('.sets-container');
             setsContainer.innerHTML = '';
 
-            const reps = exercise.adjustableTime ? `${workoutData[currentWorkout][exerciseIndex]?.time || exercise.reps.split(' ')[0]} segundos` : exercise.reps;
+            const reps = exercise.adjustableTime ? 
+                `${workoutData[currentWorkout][exerciseIndex]?.time || exercise.reps.split(' ')[0]} segundos` : 
+                workoutData[currentWorkout][exerciseIndex]?.reps || exercise.reps;
 
-            for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
+            const sets = workoutData[currentWorkout][exerciseIndex]?.sets || exercise.sets;
+            for (let setIndex = 0; setIndex < sets; setIndex++) {
                 const setRow = createSetRow(exerciseIndex, setIndex, reps, exercise.rest);
                 setsContainer.appendChild(setRow);
             }
@@ -530,7 +607,7 @@
                 const input = document.createElement('input');
                 input.type = 'number';
                 input.className = 'weight-input';
-                input.placeholder = 'Peso';
+                input.placeholder = 'Peso (kg)';
                 input.value = workoutData[currentWorkout][exerciseIndex]?.weights[setIndex] || '';
                 input.onchange = (e) => updateWeight(exerciseIndex, setIndex, e.target.value);
                 row.appendChild(input);
@@ -663,7 +740,7 @@
         }
 
         function resetWorkout() {
-            if (confirm('Tem certeza que deseja resetar o progresso? Os pesos inseridos serão mantidos.')) {
+            if (confirm('Tem certeza que deseja resetar o progresso? Os pesos, séries e repetições inseridos serão mantidos.')) {
                 if (timerInterval) {
                     clearInterval(timerInterval);
                     timerInterval = null;
@@ -671,10 +748,14 @@
                 workouts.forEach((workout, workoutIndex) => {
                     workout.exercises.forEach((exercise, exerciseIndex) => {
                         const currentWeight = workoutData[workoutIndex][exerciseIndex]?.weights[0] || exercise.weight || '';
+                        const currentSets = workoutData[workoutIndex][exerciseIndex]?.sets || exercise.sets;
+                        const currentReps = workoutData[workoutIndex][exerciseIndex]?.reps || exercise.reps;
                         const currentTime = workoutData[workoutIndex][exerciseIndex]?.time || (exercise.adjustableTime ? '60' : null);
                         workoutData[workoutIndex][exerciseIndex] = {
-                            weights: Array(exercise.sets).fill(currentWeight),
-                            completed: Array(exercise.sets).fill(false),
+                            sets: currentSets,
+                            reps: currentReps,
+                            weights: Array(currentSets).fill(currentWeight),
+                            completed: Array(currentSets).fill(false),
                             timer: false,
                             time: currentTime
                         };
